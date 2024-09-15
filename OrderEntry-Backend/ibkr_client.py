@@ -3,6 +3,7 @@ from ibapi.wrapper import *
 from ibapi.contract import Contract
 from ibapi.order import Order
 from threading import Event
+from flask import Flask, jsonify, request
 
 class IBKRClient(EClient, EWrapper):
     def __init__(self):
@@ -74,6 +75,14 @@ class IBKRClient(EClient, EWrapper):
 
     def orderStatus(self, orderId: OrderId, status: str, filled: float, remaining: float, avgFillPrice: float, permId: int, parentId: int, lastFillPrice: float, clientId: int, whyHeld: str, mktCapPrice: float):
         print(f"orderStatus. orderId: {orderId}, status: {status}, filled: {filled}, remaining: {remaining}, avgFillPrice: {avgFillPrice}")
+        self.response = {
+            'status':status,
+            'filled': float(filled),
+            'avgFillPrice': float(avgFillPrice),
+            'riskedDollars': float(avgFillPrice) - float(self.contract_data['stop_loss']),
+            'InvestedCapital': float(avgFillPrice) * float(filled),
+            'riskedCapital':float(filled)*float(avgFillPrice) - float(self.contract_data['stop_loss'])
+        }
 
         # Check if the order is completed
         print('status')
@@ -81,6 +90,8 @@ class IBKRClient(EClient, EWrapper):
             print("Order completed. Disconnecting...")
             self.order_complete.set()
             self.disconnect()
+        
+        #return jsonify(response)
 
     def execDetails(self, reqId: int, contract: Contract, execution: Execution):
         print(f"execDetails. reqId: {reqId}, contract: {contract}, execution: {execution}")

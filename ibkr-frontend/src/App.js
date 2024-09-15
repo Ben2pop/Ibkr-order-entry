@@ -2,8 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import { ThreeDots } from 'react-loader-spinner'; // Import the loader component
 import { SwipeableButton } from "react-swipeable-button";
+import { toast, ToastContainer, Bounce, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+  //toast.configure();
+
   const [ticker, setTicker] = useState('');
   const [askPrice, setAskPrice] = useState('');
   const [action, setAction] = useState('Buy');
@@ -68,6 +72,22 @@ function App() {
     setResetKey(prevKey => prevKey + 1); // Increment key to trigger re-render
     setSliderPosition(false); // Reset slider position state if necessary
   };
+
+  const CustomPreSubmittedToast = () => (
+    <div>
+        <div>Order placed successfully!</div>
+        <div>The order is PreSubmitted and will be placed at Market when it opens.</div>
+    </div>
+);
+
+const CustomFilledToast = ({filled, avgFillPrice, riskedDollars, InvestedCapital, RiskedCapital}) => (
+  <div>
+      <div>Order Filled successfully!</div>
+      <div>You just  bought {filled} Shares for {avgFillPrice}</div>
+      <div>You invested {InvestedCapital}</div>
+      <div>You are risking {riskedDollars} - for a total risk of {RiskedCapital}</div>
+  </div>
+);
 
   useEffect(() => {
     // Update adjustedQuantity when quantity or quantityFraction changes
@@ -145,12 +165,49 @@ function App() {
       });
   
       const data = await response.json();
-      console.log(data)
-      if (data.status === 'Order completed') {
-        alert('Order placed successfully!');
+      console.log('data ===>  ', data)
+      if (data.status === 'PreSubmitted') {
+        toast.info(<CustomPreSubmittedToast />, {
+          position: 'top-right',
+          autoClose: false, // Keep the toast persistent
+          theme:'colored',
+          transition: Slide,
+          html: true // Apply custom class for color
+        });
+      } else if (data.status === 'Filled' || data.status === 'PartiallyFilled') {
+        toast.success(<CustomFilledToast filled={data.filled} avgFillPrice={data.avgFillPrice} riskedDollars={data.riskedDollars} InvestedCapital={data.InvestedCapital} RiskedCapital={data.riskedCapital} />, {
+          position: 'top-right',
+          autoClose: false, // Keep the toast persistent
+          theme:'colored',
+          transition: Slide,
+          html: true // Apply custom class for color
+        });
+      } else if (data.status === 'Cancelled' || data.status === 'ApiCancelled') {
+        toast.warn('The order was cancelled by API.', {
+          position: 'top-right',
+          autoClose: false, // Keep the toast persistent
+          theme:'colored',
+          transition: Slide,
+          html: true // Apply custom class for color
+        });
+      } else if (data.status === 'Rejected') {
+        toast.error('The order was cancelled by broker.', {
+          position: 'top-right',
+          autoClose: false, // Keep the toast persistent
+          theme:'colored',
+          transition: Slide,
+          html: true // Apply custom class for color
+        });
       } else {
-        alert('Failed to place order: ' + data.error);
+        toast.error('Failed to place order: ' + data.error, {
+          position: 'top-right',
+          autoClose: false, // Keep the toast persistent
+          theme:'colored',
+          transition: Slide,
+          html: true // Apply custom class for color
+        });
       }
+      
     } catch (error) {
       alert('Error sending order: ' + error.message);
     } finally {
@@ -171,6 +228,7 @@ function App() {
 
   return (
     <div className="app">
+      <ToastContainer />
       <div className="form-container">
         <div className="order-entry-section">
           <h3>Order Entry</h3>
@@ -339,6 +397,8 @@ function App() {
           {loading && <ThreeDots color="#007bff" height={40} width={80} />} {/* Loader */}
         </div>
       </div>
+      
+
     </div>
   );
 }

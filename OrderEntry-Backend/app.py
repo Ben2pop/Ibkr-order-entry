@@ -4,6 +4,7 @@ from ibkr_client import IBKRClient
 import requests
 import threading
 import time
+import json
 
 
 app = Flask(__name__)
@@ -122,7 +123,9 @@ def send_order():
     # Run the client and wait for the order to complete
     client.run_until_complete()
     print('finish')
-    return jsonify({'status': 'Order completed'}), 200
+    print(json.dumps(client.response, indent=4))
+    return jsonify(client.response),200
+    #return jsonify({'status': 'Order completed'}), 200
 
 
 

@@ -201,3 +201,34 @@
   background-color: #007bff; /* Active button background */
   color: white;
 }
+
+.toast-info {
+  background-color: #17a2b8 !important; /* Info color (blue) */
+  color: white !important;
+}
+
+.toast-info .Toastify__toast-icon {
+  color: white !important; /* Icon color */
+}
+
+.toast-success {
+  background-color: #28a745 !important; /* Success color (green) */
+  color: white !important;
+}
+.toast-success .Toastify__toast-icon {
+  color: white !important; /* Icon color */
+}
+
+.toast-warning {
+  background-color: #ffc107 !important; /* Warning color (yellow) */
+  color: black !important;
+}
+
+.toast-error {
+  background-color: #dc3545 !important; /* Error color (red) */
+  color: white !important;
+}
+
+.toast-error .Toastify__toast-icon {
+  color: white !important; /* Icon color */
+}
