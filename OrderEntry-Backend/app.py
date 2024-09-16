@@ -25,11 +25,11 @@ def fetch_5min_candle_low(api_key, symbol):
     }
 
     response = requests.get(url, headers=headers, params=querystring)
-    print('OK')
+    #print('OK')
     if response.status_code == 200:
         res = response.json()
         try:
-            print(res)
+            #print(res)
             keys = list(res['body'].keys())
             lastkey = keys[-1]
             lowOfLast5MinCandle = res['body'][lastkey]['low']
@@ -55,9 +55,9 @@ def fetch_last_ask_price(api_key, symbol):
             if askPrice == 'N/A':
                 askPrice = 0
             else:
-                print('askPrice:   ', askPrice )
+                #print('askPrice:   ', askPrice )
                 askPrice = float(askPrice.replace('$', '').replace(',', ''))
-                print(askPrice)
+                #print(askPrice)
                 lowOfDay = res['body']['keyStats']['dayrange']['value'].split("-")[0].strip()
                 if lowOfDay == 'NA':
                     lowOfDay = 0.0
@@ -116,14 +116,16 @@ def send_order():
     client.set_order_data(ticker, action, quantity, order_type, time_in_force, stop_loss)
     print('client')
     # Connect to TWS/IB Gateway and run the client
-    client.connect("127.0.0.1", 7497, 100)
+    port_prod = 7496
+    port_paper = 7497
+    client.connect("127.0.0.1", port_paper, 100)
     print('connected')
     client.run()
 
     # Run the client and wait for the order to complete
     client.run_until_complete()
     print('finish')
-    print(json.dumps(client.response, indent=4))
+    #print(json.dumps(client.response, indent=4))
     return jsonify(client.response),200
     #return jsonify({'status': 'Order completed'}), 200
 

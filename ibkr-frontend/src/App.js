@@ -83,9 +83,9 @@ function App() {
 const CustomFilledToast = ({filled, avgFillPrice, riskedDollars, InvestedCapital, RiskedCapital}) => (
   <div>
       <div>Order Filled successfully!</div>
-      <div>You just  bought {filled} Shares for {avgFillPrice}</div>
-      <div>You invested {InvestedCapital}</div>
-      <div>You are risking {riskedDollars} - for a total risk of {RiskedCapital}</div>
+      <div>You just  bought {filled} Shares for ${avgFillPrice}</div>
+      <div>You invested ${InvestedCapital}</div>
+      <div>You are risking ${riskedDollars} - for a total risk of ${RiskedCapital}</div>
   </div>
 );
 
@@ -212,6 +212,28 @@ const CustomFilledToast = ({filled, avgFillPrice, riskedDollars, InvestedCapital
       alert('Error sending order: ' + error.message);
     } finally {
       setLoading(false); // Hide loader
+      setTicker('');
+      setAskPrice('');
+      setAction('Buy');
+      setQuantity(0);
+      setOrderType('Market');
+      setTimeInForce('GTC');
+      setInvestedCapital(28000);
+      setRiskPerTrade(0.5);
+      setStopLoss('');
+      setStopLossPercentage('');
+      setTakeProfit('');
+      setLowOfDay('');
+      setAskDate('');
+      setAskTime('');
+      setLowDate('');
+      setLowTime('');
+      setTimeframe('1Day');
+      setSliderValue(0);
+      setSliderPosition(false);
+      setQuantityFraction('full');
+      setAdjustedQuantity(0); // Reset adjusted quantity
+      setResetKey(prevKey => prevKey + 1); // Trigger re-render if needed
     }
   };
 

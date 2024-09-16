@@ -21,14 +21,14 @@ class IBKRClient(EClient, EWrapper):
             'time_in_force': time_in_force,
             'stop_loss': stop_loss,
         }
-        print('tick==>',self.contract_data['ticker'])
-        print('Action==>',self.contract_data['action'])
-        print('Quantity==>',self.contract_data['quantity'])
+        #print('tick==>',self.contract_data['ticker'])
+        #print('Action==>',self.contract_data['action'])
+        #print('Quantity==>',self.contract_data['quantity'])
 
     def nextValidId(self, orderId: OrderId):
-        print('nextValidID')
+        #print('nextValidID')
         self.nextOrderId = orderId
-        print(f"Next valid orderId: {self.nextOrderId}")
+        #print(f"Next valid orderId: {self.nextOrderId}")
 
         # Define contract using the ticker passed from the Flask app
         mycontract = Contract()
@@ -36,7 +36,7 @@ class IBKRClient(EClient, EWrapper):
         mycontract.secType = "STK"    
         mycontract.exchange = "SMART"
         mycontract.currency = "USD"
-        print('running contract')
+        #print('running contract')
         # Request contract details
         self.reqContractDetails(self.nextOrderId, mycontract)
 
@@ -54,8 +54,8 @@ class IBKRClient(EClient, EWrapper):
         myorder.transmit = False
         stopLoss = Order()
         stopLoss.orderId = myorder.orderId + 1
-        print('stopLoss.orderId', stopLoss.orderId)
-        print('stopLoss.orderId', self.contract_data['action'])
+        #print('stopLoss.orderId', stopLoss.orderId)
+        #print('stopLoss.orderId', self.contract_data['action'])
         stopLoss.action = 'SELL' if self.contract_data['action'] == 'Buy' else 'BUY'
         stopLoss.orderType = 'STP'
         #Stop trigger price
@@ -67,26 +67,26 @@ class IBKRClient(EClient, EWrapper):
         stopLoss.transmit = True
 
 
-        print('ordering')
+        #print('ordering')
         # Place the order
         self.placeOrder(myorder.orderId, contractDetails.contract, myorder)
-        print('order ok waiting for SL')
+        #print('order ok waiting for SL')
         self.placeOrder(stopLoss.orderId, contractDetails.contract, stopLoss)
 
     def orderStatus(self, orderId: OrderId, status: str, filled: float, remaining: float, avgFillPrice: float, permId: int, parentId: int, lastFillPrice: float, clientId: int, whyHeld: str, mktCapPrice: float):
         print(f"orderStatus. orderId: {orderId}, status: {status}, filled: {filled}, remaining: {remaining}, avgFillPrice: {avgFillPrice}")
         self.response = {
             'status':status,
-            'filled': float(filled),
-            'avgFillPrice': float(avgFillPrice),
-            'riskedDollars': float(avgFillPrice) - float(self.contract_data['stop_loss']),
-            'InvestedCapital': float(avgFillPrice) * float(filled),
-            'riskedCapital':float(filled)*float(avgFillPrice) - float(self.contract_data['stop_loss'])
+            'filled': round(float(filled),2),
+            'avgFillPrice': round(float(avgFillPrice),2),
+            'riskedDollars': round(float(avgFillPrice) - float(self.contract_data['stop_loss']),2),
+            'InvestedCapital': round(float(avgFillPrice) * float(filled),2),
+            'riskedCapital':round(float(filled)*(float(avgFillPrice) - float(self.contract_data['stop_loss'])),2)
         }
 
         # Check if the order is completed
-        print('status')
-        if status in ['Filled', 'Cancelled','PreSubmitted']:
+        #print('status')
+        if status in ['Filled', 'Cancelled']:
             print("Order completed. Disconnecting...")
             self.order_complete.set()
             self.disconnect()
