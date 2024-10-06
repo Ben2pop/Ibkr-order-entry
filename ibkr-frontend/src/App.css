@@ -1,11 +1,46 @@
-.app {
-  font-family: 'Arial', sans-serif;
-  
-  padding: 20px;
+.app-container {
   display: flex;
-  flex-direction: column; /* Stack children vertically */
-  align-items: center; /* Center children horizontally */
-  min-height: 100vh;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+}
+
+.line1 {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 70%; /* Adjust this value to control the height of line1 */
+}
+
+.app {
+  min-width: 600px;
+  width: 600px; /* Fixed width */
+  height: 100%;
+  overflow-y: auto; /* Add scrollbar if content overflows */
+}
+
+.chart {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.line2 {
+  width: 100%;
+  height: 30%; /* Adjust this value to control the height of line2 */
+  overflow-y: auto; /* Add scrollbar if content overflows */
+}
+
+/* Existing styles... */
+
+/* You may need to adjust these existing styles to fit the new layout */
+.form-container, .summary-box {
+  width: 100%;
+}
+
+/* Ensure the Chart component takes full width and height of its container */
+.chart > div {
+  width: 100%;
+  height: 100%;
 }
 
 .form-container {

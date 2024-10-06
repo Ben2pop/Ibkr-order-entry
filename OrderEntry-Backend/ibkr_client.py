@@ -4,6 +4,7 @@ from ibapi.contract import Contract
 from ibapi.order import Order
 from threading import Event
 from flask import Flask, jsonify, request
+from datetime import date
 
 class IBKRClient(EClient, EWrapper):
     def __init__(self):
@@ -79,9 +80,12 @@ class IBKRClient(EClient, EWrapper):
             'status':status,
             'filled': round(float(filled),2),
             'avgFillPrice': round(float(avgFillPrice),2),
+            'stopLossPrice': round(float(self.contract_data['stop_loss']), 2), 
             'riskedDollars': round(float(avgFillPrice) - float(self.contract_data['stop_loss']),2),
             'InvestedCapital': round(float(avgFillPrice) * float(filled),2),
-            'riskedCapital':round(float(filled)*(float(avgFillPrice) - float(self.contract_data['stop_loss'])),2)
+            'riskedCapital':round(float(filled)*(float(avgFillPrice) - float(self.contract_data['stop_loss'])),2),
+            'orderData': date.today()
+            
         }
 
         # Check if the order is completed
