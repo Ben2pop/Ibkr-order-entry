@@ -153,7 +153,18 @@ def send_order():
     if order_res['status'] == 'Filled':
         print('test')
         order_entry(ticker.upper(), order_res['avgFillPrice'], order_res['filled'], order_res['stopLossPrice'])
-    return jsonify(client.response),200
+        print('============================================')
+        updated_data = fetch_data()
+        print('============================================')
+        if updated_data is None:
+            return jsonify({'error': 'Could not fetch updated data'}), 500
+    print('gogogog ==>',updated_data)
+    response_data = {
+        "updated_data": updated_data,
+        "client_response": client.response  # Adjust to access the response from your client
+    }
+    return jsonify(response_data), 200
+    #return jsonify(client.response),200
     #return jsonify({'status': 'Order completed'}), 200
 
 @app.route('/post_manual_trade', methods=['POST'])

@@ -27,7 +27,8 @@ const DynamicTable = ({ tableData = [], fetchDataFromBackend }) => {
       const withSalePrice = data.filter(row => row.average_sold_price);
       const withoutSalePrice = data.filter(row => !row.average_sold_price);
       const sortByDate = (a, b) => new Date(b.entrydate) - new Date(a.entrydate);
-      const sortedWithoutSalePrice = withoutSalePrice.sort(sortByDate);
+      const sortById = (a, b) => a.id - b.id;
+      const sortedWithoutSalePrice = withoutSalePrice.sort(sortById);
       const sortedWithSalePrice = withSalePrice.sort(sortByDate);
       return [...sortedWithoutSalePrice, ...sortedWithSalePrice];
     };

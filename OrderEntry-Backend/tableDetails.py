@@ -99,8 +99,8 @@ def create_entry():
     
 
 def order_entry(symbol, average_filled_price,num_shares, initial_stop_loss ):
-    data = request.json  # Get the JSON data from the request
-    print(data)
+    #data = request.json  # Get the JSON data from the request
+    #print(data)
     # Extract the data (you may want to validate these inputs)
     try:
         today = datetime.today()
@@ -120,7 +120,7 @@ def order_entry(symbol, average_filled_price,num_shares, initial_stop_loss ):
         conn.commit()  # Commit the transaction
         cur.close()
         conn.close()
-
+        print('finish updated database')
         return jsonify({"id": new_id, "symbol": symbol, "average_filled_price": average_filled_price, 
                          "num_shares": num_shares,
                          "initial_stop_loss": initial_stop_loss,

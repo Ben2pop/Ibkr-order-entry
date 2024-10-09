@@ -168,7 +168,6 @@ const CustomFilledToast = ({filled, avgFillPrice, riskedDollars, InvestedCapital
 
 
   const sendOrder = async () => {
-    console.log('adjustedQuantity==>',adjustedQuantity)
     if (sliderPosition !== true) return; // Don't send if slider isn't at 100
     setLoading(true); // Show loader
     try {
@@ -189,7 +188,8 @@ const CustomFilledToast = ({filled, avgFillPrice, riskedDollars, InvestedCapital
   
       const data = await response.json();
       console.log('data ===>  ', data)
-      if (data.status === 'PreSubmitted') {
+      setFetchedData(data['updated_data'])
+      if (data['client_response'].status === 'PreSubmitted') {
         toast.info(<CustomPreSubmittedToast />, {
           position: 'top-right',
           autoClose: false, // Keep the toast persistent
@@ -197,15 +197,15 @@ const CustomFilledToast = ({filled, avgFillPrice, riskedDollars, InvestedCapital
           transition: Slide,
           html: true // Apply custom class for color
         });
-      } else if (data.status === 'Filled' || data.status === 'PartiallyFilled') {
-        toast.success(<CustomFilledToast filled={data.filled} avgFillPrice={data.avgFillPrice} riskedDollars={data.riskedDollars} InvestedCapital={data.InvestedCapital} RiskedCapital={data.riskedCapital} />, {
+      } else if (data['client_response'].status === 'Filled' || data['client_response'].statuss === 'PartiallyFilled') {
+        toast.success(<CustomFilledToast filled={data['client_response'].filled} avgFillPrice={data['client_response'].avgFillPrice} riskedDollars={data['client_response'].riskedDollars} InvestedCapital={data['client_response'].InvestedCapital} RiskedCapital={data['client_response'].riskedCapital} />, {
           position: 'top-right',
           autoClose: false, // Keep the toast persistent
           theme:'colored',
           transition: Slide,
           html: true // Apply custom class for color
         });
-      } else if (data.status === 'Cancelled' || data.status === 'ApiCancelled') {
+      } else if (data['client_response'].status === 'Cancelled' || data['client_response'].status === 'ApiCancelled') {
         toast.warn('The order was cancelled by API.', {
           position: 'top-right',
           autoClose: false, // Keep the toast persistent
@@ -213,7 +213,7 @@ const CustomFilledToast = ({filled, avgFillPrice, riskedDollars, InvestedCapital
           transition: Slide,
           html: true // Apply custom class for color
         });
-      } else if (data.status === 'Rejected') {
+      } else if (data['client_response'].status === 'Rejected') {
         toast.error('The order was cancelled by broker.', {
           position: 'top-right',
           autoClose: false, // Keep the toast persistent
