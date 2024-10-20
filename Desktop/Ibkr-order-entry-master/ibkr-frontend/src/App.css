@@ -1,0 +1,277 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+}
+
+.line1 {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 90%; /* Adjust this value to control the height of line1 */
+}
+
+.app {
+  min-width: 560px;
+  width: 560px; /* Fixed width */
+  height: 100vh;
+  overflow-y: auto; /* Add scrollbar if content overflows */
+  margin-top:15px;
+  margin-right: 10px;
+}
+
+.chart {
+  flex-grow: 1;
+  height: 100vh;
+}
+
+.line2 {
+  width: 100%;
+  height: 30%; /* Adjust this value to control the height of line2 */
+  overflow-y: auto; /* Add scrollbar if content overflows */
+}
+
+/* Existing styles... */
+
+/* You may need to adjust these existing styles to fit the new layout */
+.form-container, .summary-box {
+  width: 100%;
+}
+
+/* Ensure the Chart component takes full width and height of its container */
+.chart > div {
+  width: 100%;
+  height: 100%;
+}
+
+.form-container {
+  background:linear-gradient(145deg, #e0f7ff, #ffffff, #cfe0ff);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  width: 100%;
+  max-width: 500px;
+  overflow: hidden; /* Prevents overflow */
+}
+
+.tickerInput{
+  margin-bottom: 15px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.input-field {
+  width: calc(100% - 0px); /* Adjust width to account for padding and border */
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  box-sizing: border-box; /* Ensure padding and border are included in width */
+}
+
+.timeframe-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.timeframe-btn {
+  flex: 1;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 10px;
+  background-color: transparent;
+  border: 1px solid #007bff;
+  color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.timeframe-btn.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.buy {
+  background-color: #6e8072;
+  color: white;
+  border: none;
+}
+
+.sell {
+  background-color: #c2979b;
+  color: white;
+  border: none;
+}
+
+.buy-active {
+  background-color: #1f7a1f; /* Darker green for selected Buy button */
+  color: white;
+}
+
+.sell-active {
+  background-color: #a11f1f; /* Darker red for selected Sell button */
+  color: white;
+}
+
+.marg {
+  margin-top: 15px;
+}
+
+.summary-box {
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 15px;
+  background:linear-gradient(145deg, #e0f7ff, #ffffff, #cfe0ff);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  width: 100%;
+  max-width: 500px;
+}
+
+.summary-box ul {
+  padding-left: 20px;
+}
+
+.slider-container {
+  width: 80%; /* Adjust this value as needed */
+  padding: 10px 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slider {
+  width: 100%; /* Ensure the slider fills the container's width */
+  height: 12px; /* Height of the track */
+  background-color: #ddd; /* Background color of the track */
+  border-radius: 6px; /* Rounded corners for the track */
+  outline: none; /* Remove default outline */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.slider::-webkit-slider-thumb {
+  width: 24px; /* Width of the thumb */
+  height: 24px; /* Height of the thumb */
+  border-radius: 6px; /* Rounded corners for the thumb */
+  background-color: #007bff; /* Color of the thumb */
+  cursor: pointer; /* Pointer cursor on hover */
+  appearance: none; /* Remove default appearance */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.slider::-moz-range-thumb {
+  width: 24px; /* Width of the thumb */
+  height: 24px; /* Height of the thumb */
+  border-radius: 6px; /* Rounded corners for the thumb */
+  background-color: #007bff; /* Color of the thumb */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.slider::-ms-thumb {
+  width: 24px; /* Width of the thumb */
+  height: 24px; /* Height of the thumb */
+  border-radius: 6px; /* Rounded corners for the thumb */
+  background-color: #007bff; /* Color of the thumb */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  color: #666666;
+}
+
+.quantity-buttons {
+  display: flex;
+  justify-content: space-between; /* Aligns the buttons evenly */
+  margin-top: 10px; /* Adds some space above the buttons */
+}
+
+.quantity-buttons .btn {
+  flex: 1;
+  margin: 0 5px; /* Adds space between the buttons */
+  padding: 8px 12px;
+  background-color: transparent; /* Default transparent background */
+  border: 1px solid #007bff; /* Button border */
+  color: #007bff;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.quantity-buttons .btn.active {
+  background-color: #007bff; /* Active button background */
+  color: white;
+}
+
+.toast-info {
+  background-color: #17a2b8 !important; /* Info color (blue) */
+  color: white !important;
+}
+
+.toast-info .Toastify__toast-icon {
+  color: white !important; /* Icon color */
+}
+
+.toast-success {
+  background-color: #28a745 !important; /* Success color (green) */
+  color: white !important;
+}
+.toast-success .Toastify__toast-icon {
+  color: white !important; /* Icon color */
+}
+
+.toast-warning {
+  background-color: #ffc107 !important; /* Warning color (yellow) */
+  color: black !important;
+}
+
+.toast-error {
+  background-color: #dc3545 !important; /* Error color (red) */
+  color: white !important;
+}
+
+.toast-error .Toastify__toast-icon {
+  color: white !important; /* Icon color */
+}
+
+.button-group-container {
+  display: flex;
+  justify-content: center; /* Centers the button group horizontally */
+  margin: 20px 0; /* Optional: Adds some vertical spacing */
+}
